@@ -58,4 +58,38 @@ async function analyzing(inputFile) {
     }
 }
 
-module.exports = { analyzing }
+async function reconstructSubstitution(wordFile, sentenceFile) {
+
+    const wordFilePath = `./data/analyzed/words/${wordFile}`
+    const sentenceFilePath = `./data/analyzed/sentences/${sentenceFile}`
+    // number of sentences -> between 1 and number of sentences in the file
+
+    try {
+
+        console.log("word file path", wordFilePath)
+        console.log("sentence file path", sentenceFilePath)
+        
+        // read word file
+        // read sentence file
+
+            // const wordPool = await fs.readFile(inputFilePath, { encoding: 'utf8' });
+            // const sentencePool = await fs.readFile(inputFilePath, { encoding: 'utf8' });
+        
+        // do stuff
+
+            // based on number of sentences, pull a random number of sentence structures
+            // for each wordtag in the sentence, search the word list for a word that matches
+                // if a word does not exist, skip it
+                // in the future, search for a more basic part of text, then conjugate it to fit the tag
+
+        // write file
+
+            // await fs.writeFile(wordJSON, JSON.stringify(wordList));
+
+    } 
+    catch (error){
+        console.error(error)
+    }
+}
+
+module.exports = { analyzing, reconstructSubstitution }
