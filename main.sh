@@ -1,18 +1,18 @@
 #! /bin/bash
 
 # variable examples
-rawHTML="poemaday.html"
-scrapedText="AsKar.txt"
-url="https://poets.org/poem-a-day"
+analyzeText="AsKar.txt"
+reconstructWords="AsKar-words.json"
+reconstructSentences="AsKar-sentences.json"
 
 if [ "$1" = "a" ] 
 then
-    echo "route a"
-    node main.js a
-elif [ "$1" = "ct" ]
+    echo "route analyze"
+    node main.js a $analyzeText
+elif [ "$1" = "r" ]
 then
-    echo "route b"
-    node main.js b
+    echo "route reconstruct" $reconstructWords $reconstructSentences
+    node main.js r
 else
     echo "Please indicate a valid route."
 fi

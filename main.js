@@ -1,15 +1,20 @@
 const process = require('process');
-const utility = require('./scripts/helper')
-const specific = require('./scripts/specific')
+const utility = require('./scripts/utility')
 
 const processRoute = process.argv[2]
 const inputName = process.argv[3]
+const inputSentences = process.argv[4]
 
 if (processRoute=="a"){
-    console.log('route a...')
-
-} else if (processRoute=="b") {
-    console.log('route b...')
+    // analyzing
+    console.log('analyzing')
+    utility.analyzing(inputName)
+   
+} else if (processRoute=="r") {
+    // will want to create multiple reconstruct routes based on how text is being reconstructed -> blackout poetry, substition, etc.
+    console.log('reconstructing')
+    console.log(inputName)
+    console.log(inputSentences)
 } else {
     console.log('please indicate a route')
 }

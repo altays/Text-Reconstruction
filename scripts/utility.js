@@ -1,16 +1,14 @@
-
 const fs = require('node:fs/promises');
 const nlp = require('compromise');
 
-const inputFile = "AsKar.txt" // strip the last four chars for the name
-const inputFilePath = `./data/rawText/${inputFile}`
-const wordJSON = `./data/analyzed/words/${inputFile.slice(0,inputFile.length-4)}-words.json`
-const sentenceJSON = `./data/analyzed/sentences/${inputFile.slice(0,inputFile.length-4)}-sentences.json`
+async function analyzing(inputFile) {
 
-async function analyzing(filePath) {
+    const inputFilePath = `./data/rawText/${inputFile}`
+    const wordJSON = `./data/analyzed/words/${inputFile.slice(0,inputFile.length-4)}-words.json`
+    const sentenceJSON = `./data/analyzed/sentences/${inputFile.slice(0,inputFile.length-4)}-sentences.json`
  
     try {
-        const data = await fs.readFile(filePath, { encoding: 'utf8' });
+        const data = await fs.readFile(inputFilePath, { encoding: 'utf8' });
 
         const nlpData = nlp(data)
         let sentences = nlpData.sentences().json();
@@ -60,4 +58,4 @@ async function analyzing(filePath) {
     }
 }
 
-analyzing(inputFilePath)
+module.exports = { analyzing }
