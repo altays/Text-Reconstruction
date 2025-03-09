@@ -13,6 +13,11 @@ elif [ "$1" = "r" ]
 then
     # echo "route reconstruct" 
     node main.js r $reconstructWords $reconstructSentences
+elif [ "$1" = "i" ]
+then
+    # echo "route reconstruct" 
+    mkdir data data/analyzed data/analyzed/words data/analyzed/sentences data/processed data/rawText
+    touch test.js
 else
     echo "Please indicate a valid route."
 fi
