@@ -63,24 +63,41 @@ async function reconstructSubstitution(wordFile, sentenceFile) {
     const wordFilePath = `./data/analyzed/words/${wordFile}`
     const sentenceFilePath = `./data/analyzed/sentences/${sentenceFile}`
     // number of sentences -> between 1 and number of sentences in the file
+    const sentenceNum = randomNum(3,2)
 
     try {
 
-        console.log("word file path", wordFilePath)
-        console.log("sentence file path", sentenceFilePath)
-        
-        // read word file
-        // read sentence file
+        const wordPool = JSON.parse(await fs.readFile(wordFilePath, { encoding: 'utf8' }));
+        const sentencePool = JSON.parse(await fs.readFile(sentenceFilePath, { encoding: 'utf8' }));
 
-            // const wordPool = await fs.readFile(inputFilePath, { encoding: 'utf8' });
-            // const sentencePool = await fs.readFile(inputFilePath, { encoding: 'utf8' });
-        
-        // do stuff
+        let sentenceStructureList = []
 
-            // based on number of sentences, pull a random number of sentence structures
-            // for each wordtag in the sentence, search the word list for a word that matches
-                // if a word does not exist, skip it
-                // in the future, search for a more basic part of text, then conjugate it to fit the tag
+        // pull random sentence structures
+        for (let i = 0; i < sentenceNum; i++) {
+            let randomIndex = randomNum(0, sentencePool.length)
+            let randomSentence = sentencePool[randomIndex]
+            sentenceStructureList.push(randomSentence)
+        }
+        
+        // console.log(sentenceStructureList)
+
+        let reconstructedSentence = ""
+        console.log(typeof wordPool)
+
+        // looping over each sentence, each word within each sentence
+        for (let i = 0; i < sentenceStructureList.length; i++) {
+            console.log('sentence')
+            for (let j = 0; j < sentenceStructureList[i].length; j++) {
+                let wordTag = sentenceStructureList[i][j]
+                console.log(wordTag)
+                // search wordPool for any word whose tags match the selected tags
+                let position = wordPool.indexOf(wordTag)
+                console.log(position)
+            }
+        }
+        // for each wordtag in the sentence, search the word list for a word that matches
+            // if a word does not exist, skip it
+            // in the future, search for a more basic part of text, then conjugate it to fit the tag
 
         // write file
 
@@ -90,6 +107,10 @@ async function reconstructSubstitution(wordFile, sentenceFile) {
     catch (error){
         console.error(error)
     }
+}
+
+function randomNum(max, min) {
+    return Math.floor(Math.random() * (max-min) + min)
 }
 
 module.exports = { analyzing, reconstructSubstitution }
