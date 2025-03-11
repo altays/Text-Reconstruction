@@ -143,7 +143,7 @@ async function reconstructSubstitution(wordFile, sentenceFile) {
             }
             constructedSentence= helper.normalCase(constructedSentence) + helper.createPunctuation()
         }        
-        console.log(constructedSentence)
+        await fs.writeFile(`./data/processed/${constructedSentence.slice(0,5)+helper.randomNum(0,10000)}-reconstructed.txt`, constructedSentence);
     } 
     catch (error){
         console.error(error)
