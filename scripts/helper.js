@@ -35,9 +35,18 @@ function normalCase(string) {
     return firstChar + tempString
 }
 
-function createPunctuation() {
-    const puncArray = ['. ', ', ','! ', '? ',]
-    let randomIndex = randomNum(0,puncArray.length)
+function createPunctuation(sentenceCheck = false) {
+    let lastSentence = sentenceCheck
+    let randomIndex;
+    let puncArray;
+    if (lastSentence === false) {
+        puncArray = ['. ', ', ','! ', '? ',]
+        randomIndex = randomNum(0,puncArray.length)
+    } else {
+        puncArray = ['. ', '! ', '? ',]
+        randomIndex = randomNum(0,puncArray.length)
+    }
+
     // enhancements
         // if last sentence, should be a period, exclamation, or question mark
         // if sentence has a 'why', make it a question mark

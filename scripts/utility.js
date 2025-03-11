@@ -86,6 +86,7 @@ async function reconstructSubstitution(wordFile, sentenceFile) {
         for (let i = 0; i < sentenceStructureList.length; i++) {
 
             let sentenceWordTagList = sentenceStructureList[i]
+            let lastSentenceCheck = false;
 
             // looping over individual words in sentence
             for (let j = 0; j < sentenceWordTagList.length; j++ ) {
@@ -110,7 +111,6 @@ async function reconstructSubstitution(wordFile, sentenceFile) {
 
                         let wordTag = wordPoolTags[l]
                         let arrayIncludes = sentenceWordTags.includes(wordTag)
-                        // console.log(wordPoolTags)
 
                         if (arrayIncludes) {
                             existCheck.push(true);
@@ -130,7 +130,7 @@ async function reconstructSubstitution(wordFile, sentenceFile) {
                     if (existState==true) {
 
                         // if word is a proper noun, don't make it lowercase
-                        if (wordPoolTags.includes('ProperNoun'|| 'Pronoun') == true) {
+                        if (wordPoolTags.includes('ProperNoun' || 'Pronoun') === true) {
                             constructedSentence+=`${wordPoolText} `
                             break
                         }
@@ -141,7 +141,13 @@ async function reconstructSubstitution(wordFile, sentenceFile) {
                     }
                 }
             }
-            constructedSentence= helper.normalCase(constructedSentence) + helper.createPunctuation()
+
+            if (i === sentenceStructureList.length-1) {
+                lastSentenceCheck = true;
+            }
+
+            constructedSentence= helper.normalCase(constructedSentence) + helper.createPunctuation(lastSentenceCheck)
+
         }        
         await fs.writeFile(`./data/processed/${constructedSentence.slice(0,5)+helper.randomNum(0,10000)}-reconstructed.txt`, constructedSentence);
     } 
