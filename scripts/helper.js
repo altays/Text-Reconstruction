@@ -31,7 +31,6 @@ function shuffleArr(array){
 function normalCase(string) {
     let tempString = string.trim().slice(1, string.length)
     let firstChar = string[0].toUpperCase()
-    // let newString = tempString[0].toUpperCase() + tempString.slice(1,tempString.length) + "."
     return firstChar + tempString
 }
 
@@ -47,9 +46,6 @@ function createPunctuation(sentenceCheck = false) {
         randomIndex = randomNum(0,puncArray.length)
     }
 
-    // enhancements
-        // if last sentence, should be a period, exclamation, or question mark
-        // if sentence has a 'why', make it a question mark
     return puncArray[randomIndex]
 }
 
