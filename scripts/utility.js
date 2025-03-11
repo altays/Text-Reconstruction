@@ -64,17 +64,86 @@ async function reconstructSubstitution(wordFile, sentenceFile) {
     const wordFilePath = `./data/analyzed/words/${wordFile}`
     const sentenceFilePath = `./data/analyzed/sentences/${sentenceFile}`
     // number of sentences -> between 1 and number of sentences in the file
-    const sentenceNum = helper.randomNum(3,2)
 
     try {
-        const wordPool = helper.shuffleArr(JSON.parse(await fs.readFile(wordFilePath, { encoding: 'utf8' })));
+        const initwordPool = helper.shuffleArr(JSON.parse(await fs.readFile(wordFilePath, { encoding: 'utf8' })));
         const sentencePool = JSON.parse(await fs.readFile(sentenceFilePath, { encoding: 'utf8' }));
 
         let sentenceStructureList = []
 
-   
-        
+        let randomSentenceAmount = helper.randomNum(1,8)
 
+        let constructedSentence = ""
+
+        // pull random sentence structures
+        for (let i = 0; i < randomSentenceAmount; i++) {
+            let randomIndex = helper.randomNum(0, sentencePool.length)
+            let randomSentence = sentencePool[randomIndex]
+            sentenceStructureList.push(randomSentence)
+        }
+
+        // loop over collection of sentences
+        for (let i = 0; i < sentenceStructureList.length; i++) {
+
+            let sentenceWordTagList = sentenceStructureList[i]
+
+            // looping over individual words in sentence
+            for (let j = 0; j < sentenceWordTagList.length; j++ ) {
+
+                let sentenceWordTags = sentenceWordTagList[j]
+
+                // initial wordpool shuffle
+                let wordPool = helper.shuffleArr(initwordPool)
+
+                // looping over all words in pool
+                for (k = 0; k < wordPool.length; k++ ) {
+
+                    // shuffle wordpool after each search
+                    wordPool = helper.shuffleArr(initwordPool)
+                    let wordPoolText = wordPool[k].text
+                    let wordPoolTags = wordPool[k].tags[0]
+                    let existCheck = []
+                    let existState = true
+                    
+                    // looping over words in wordpool and checking tags
+                    for (let l = 0; l < wordPoolTags.length; l++) {
+
+                        let wordTag = wordPoolTags[l]
+                        let arrayIncludes = sentenceWordTags.includes(wordTag)
+                        // console.log(wordPoolTags)
+
+                        if (arrayIncludes) {
+                            existCheck.push(true);
+                        } else {
+                            existCheck.push(false)
+                        }
+                    }
+
+                    // looping over array of matches, if all true, then overall value is true
+                    for (let e = 0; e < existCheck.length; e++) {
+                        if (existCheck[e] === false) {
+                            existState = false
+                        }
+                    }
+
+                    // if all tags match, push text
+                    if (existState==true) {
+
+                        // if word is a proper noun, don't make it lowercase
+                        if (wordPoolTags.includes('ProperNoun'|| 'Pronoun') == true) {
+                            constructedSentence+=`${wordPoolText} `
+                            break
+                        }
+                        else {
+                            constructedSentence+=`${wordPoolText} `.toLowerCase()
+                            break
+                        }
+                    }
+                }
+            }
+            constructedSentence= helper.normalCase(constructedSentence) + helper.createPunctuation()
+        }        
+        console.log(constructedSentence)
     } 
     catch (error){
         console.error(error)
