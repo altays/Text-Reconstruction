@@ -1,5 +1,6 @@
 const fs = require('node:fs/promises');
 const nlp = require('compromise');
+const helper = require('./helper');
 
 async function analyzing(inputFile) {
 
@@ -63,54 +64,21 @@ async function reconstructSubstitution(wordFile, sentenceFile) {
     const wordFilePath = `./data/analyzed/words/${wordFile}`
     const sentenceFilePath = `./data/analyzed/sentences/${sentenceFile}`
     // number of sentences -> between 1 and number of sentences in the file
-    const sentenceNum = randomNum(3,2)
+    const sentenceNum = helper.randomNum(3,2)
 
     try {
-
-        const wordPool = JSON.parse(await fs.readFile(wordFilePath, { encoding: 'utf8' }));
+        const wordPool = helper.shuffleArr(JSON.parse(await fs.readFile(wordFilePath, { encoding: 'utf8' })));
         const sentencePool = JSON.parse(await fs.readFile(sentenceFilePath, { encoding: 'utf8' }));
 
         let sentenceStructureList = []
 
-        // pull random sentence structures
-        for (let i = 0; i < sentenceNum; i++) {
-            let randomIndex = randomNum(0, sentencePool.length)
-            let randomSentence = sentencePool[randomIndex]
-            sentenceStructureList.push(randomSentence)
-        }
+   
         
-        // console.log(sentenceStructureList)
-
-        let reconstructedSentence = ""
-        console.log(typeof wordPool)
-
-        // looping over each sentence, each word within each sentence
-        for (let i = 0; i < sentenceStructureList.length; i++) {
-            console.log('sentence')
-            for (let j = 0; j < sentenceStructureList[i].length; j++) {
-                let wordTag = sentenceStructureList[i][j]
-                console.log(wordTag)
-                // search wordPool for any word whose tags match the selected tags
-                let position = wordPool.indexOf(wordTag)
-                console.log(position)
-            }
-        }
-        // for each wordtag in the sentence, search the word list for a word that matches
-            // if a word does not exist, skip it
-            // in the future, search for a more basic part of text, then conjugate it to fit the tag
-
-        // write file
-
-            // await fs.writeFile(wordJSON, JSON.stringify(wordList));
 
     } 
     catch (error){
         console.error(error)
     }
-}
-
-function randomNum(max, min) {
-    return Math.floor(Math.random() * (max-min) + min)
 }
 
 module.exports = { analyzing, reconstructSubstitution }
