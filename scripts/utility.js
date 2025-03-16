@@ -42,16 +42,10 @@ async function analyzing(inputFile) {
                     wordObj.tags.push(compTags);
 
                     // check if word already exists
-                    // wordList.push(wordObj);
                     if (textList.includes(compText) == false) {
                         textList.push(compText);
                         wordList.push(wordObj);
-                        console.log('new word!', wordObj.text)
-                    } else {
-                        console.log('duplicate word', wordObj.text)
-                    }
-                    
-
+                    } 
 
                     subPOSArray.push(words[x].tags)
 
