@@ -16,6 +16,7 @@ async function analyzing(inputFile) {
 
         let wordList = [];
         let posArray = [];
+        let textList = [];
               
         for (let i = 0; i < sentences.length; i++) {
 
@@ -39,7 +40,19 @@ async function analyzing(inputFile) {
 
                     wordObj.text = compText;
                     wordObj.tags.push(compTags);
-                    wordList.push(wordObj)
+
+                    // check if word already exists
+                    // wordList.push(wordObj);
+                    if (textList.includes(compText) == false) {
+                        textList.push(compText);
+                        wordList.push(wordObj);
+                        console.log('new word!', wordObj.text)
+                    } else {
+                        console.log('duplicate word', wordObj.text)
+                    }
+                    
+
+
                     subPOSArray.push(words[x].tags)
 
                 }
