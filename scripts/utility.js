@@ -1,6 +1,7 @@
 const fs = require('node:fs/promises');
 const nlp = require('compromise');
 const helper = require('./helper');
+nlp.plugin(require('compromise-speech')) 
 
 async function analyzing(inputFile) {
 
@@ -32,14 +33,24 @@ async function analyzing(inputFile) {
 
                     let wordObj = {
                         text: "",
-                        tags: []
+                        tags: [],
+                        syllables: 0,
+                        pronounciation: ""
                     }
                   
                     let compText = words[x].text;
                     let compTags = words[x].tags;
+                    let compSyllables=nlp(compText).terms().syllables()[0].length
+                    let soundsLike = nlp(compText).terms().soundsLike()[0][0]
 
+                    // console.log(compText, compTags, compSyllables, soundsLike[0][0])
                     wordObj.text = compText;
                     wordObj.tags.push(compTags);
+                    wordObj.syllables = compSyllables
+                    wordObj.pronounciation = soundsLike;
+                    // console.log(compSyllables)
+                    
+                    // console.log()
 
                     // check if word already exists
                     if (textList.includes(compText) == false) {
