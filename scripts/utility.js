@@ -180,4 +180,106 @@ async function reconstructSubstitution(wordFile, sentenceFile) {
 
 // reconstruction blackout method here
 
-module.exports = { analyzing, reconstructSubstitution }
+// add conditions parameter
+async function reconstructBlackout(wordFile, sentenceFile) {
+
+    const wordFilePath = `./data/analyzed/words/${wordFile}`
+    const sentenceFilePath = `./data/analyzed/sentences/${sentenceFile}`
+    // read conditions -> pull from an object
+
+    try {
+        const initwordPool = helper.shuffleArr(JSON.parse(await fs.readFile(wordFilePath, { encoding: 'utf8' })));
+        const sentencePool = JSON.parse(await fs.readFile(sentenceFilePath, { encoding: 'utf8' }));
+
+        let sentenceStructureList = []
+
+        let randomSentenceAmount = helper.randomNum(1,8)
+
+        let constructedSentence = ""
+
+        // pull random sentence structures
+        for (let i = 0; i < randomSentenceAmount; i++) {
+            let randomIndex = helper.randomNum(0, sentencePool.length)
+            let randomSentence = sentencePool[randomIndex]
+            sentenceStructureList.push(randomSentence)
+        }
+
+        // loop over collection of sentences
+        for (let i = 0; i < sentenceStructureList.length; i++) {
+
+            let sentenceWordTagList = sentenceStructureList[i]
+            let lastSentenceCheck = false;
+
+            // looping over individual words in sentence
+            for (let j = 0; j < sentenceWordTagList.length; j++ ) {
+
+                let sentenceWordTags = sentenceWordTagList[j]
+
+                // initial wordpool shuffle
+                let wordPool = helper.shuffleArr(initwordPool)
+
+                // looping over all words in pool
+                for (k = 0; k < wordPool.length; k++ ) {
+
+                    // shuffle wordpool after each search
+                    wordPool = helper.shuffleArr(initwordPool)
+                    let wordPoolText = wordPool[k].text
+                    let wordPoolTags = wordPool[k].tags[0]
+                    let existCheck = []
+                    let existState = true
+                    
+                    // looping over words in wordpool and checking tags
+                    for (let l = 0; l < wordPoolTags.length; l++) {
+
+                        let wordTag = wordPoolTags[l]
+                        let arrayIncludes = sentenceWordTags.includes(wordTag)
+
+                        if (arrayIncludes) {
+                            existCheck.push(true);
+                        } else {
+                            existCheck.push(false)
+                        }
+                    }
+
+                    // looping over array of matches, if all true, then overall value is true
+                    for (let e = 0; e < existCheck.length; e++) {
+                        if (existCheck[e] === false) {
+                            existState = false
+                        }
+                    }
+
+                    // condition for check to add a random linebreak
+
+                    // if all tags match, push text
+                    if (existState==true) {
+
+                        // if word is a proper noun, don't make it lowercase
+                        if (wordPoolTags.includes('ProperNoun' || 'Pronoun') === true) {
+                            constructedSentence+=`${wordPoolText} `
+                            break
+                        }
+                        else {
+                            constructedSentence+=`${wordPoolText} `.toLowerCase()
+                            break
+                        }
+                    }
+                }
+            }
+
+            // condition for check to repeat line
+            if (i === sentenceStructureList.length-1) {
+                lastSentenceCheck = true;
+            }
+
+            constructedSentence= helper.normalCase(constructedSentence) + helper.createPunctuation(lastSentenceCheck)
+
+        }        
+        await fs.writeFile(`./data/processed/${constructedSentence.slice(0,5)+helper.randomNum(0,10000)}-reconstructed.txt`, constructedSentence);
+    } 
+    catch (error){
+        console.error(error)
+    }
+}
+
+
+module.exports = { analyzing, reconstructSubstitution, reconstructBlackout }
