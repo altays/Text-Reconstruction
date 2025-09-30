@@ -1,9 +1,9 @@
 #! /bin/bash
 
 # variable examples
-analyzeText="AsKar.txt"
-reconstructWords="AsKar-words.json"
-reconstructSentences="AsKar-sentences.json"
+analyzeText="sample-txt.txt"
+reconstructWords="sample-txt-words.json"
+reconstructSentences="sample-txt-sentences.json"
 
 if [ "$1" = "a" ] 
 then
@@ -12,7 +12,11 @@ then
 elif [ "$1" = "r" ]
 then
     # echo "route reconstruct" 
-    node main.js r $reconstructWords $reconstructSentences
+    node main.js r $reconstructWords $reconstructSentences sub
+elif [ "$1" = "b" ]
+then
+    # echo "route reconstruct" 
+    node main.js r $analyzeText 70 blackout
 elif [ "$1" = "i" ]
 then
     # echo "route reconstruct" 

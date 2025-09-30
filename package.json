@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "compromise": "^14.14.4",
+    "compromise-paragraphs": "^0.1.0",
     "compromise-speech": "^0.1.1"
   },
   "name": "compromise-testing",

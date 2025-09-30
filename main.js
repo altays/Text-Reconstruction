@@ -3,7 +3,7 @@ const utility = require('./scripts/utility')
 
 const processRoute = process.argv[2]
 const inputName = process.argv[3]
-const inputSentences = process.argv[4]
+const arg = process.argv[4]
 const reconstructSubRoute = process.argv[5]
 // read conditions, save as variable
 
@@ -21,11 +21,11 @@ if (processRoute=="a"){
         console.log('reconstructing')
         switch (reconstructSubRoute) {
             case "sub": {
-                utility.reconstructSubstitution(inputName, inputSentences)
+                utility.reconstructSubstitution(inputName, arg)
                 break;
             }
             case "blackout": {
-                utility.reconstructBlackout(inputName, inputSentences)
+                utility.reconstructBlackout(inputName,arg)
                 break
             }
             default: {
