@@ -1,16 +1,5 @@
 const fs = require('node:fs/promises');
 
-async function readwrite (filePath, outputFileName) {
- 
-    try {
-        const data = await fs.readFile(filePath, { encoding: 'utf8' });
-        await fs.writeFile(outputFileName,data);
-    } 
-    catch (error){
-        console.error(error)
-    }
-}
-
 function randomNum(max, min) {
     return Math.floor(Math.random() * (max-min) + min)
 }
@@ -49,4 +38,12 @@ function createPunctuation(sentenceCheck = false) {
     return puncArray[randomIndex]
 }
 
-module.exports = { readwrite, randomNum, normalCase, createPunctuation, shuffleArr }
+// add linebreak
+
+
+// repeat line
+
+
+// reading conditions -> return an object and pull values from object
+
+module.exports = { randomNum, normalCase, createPunctuation, shuffleArr }

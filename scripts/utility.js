@@ -32,6 +32,8 @@ async function analyzing(inputFile) {
                     let wordObj = {
                         text: "",
                         tags: []
+                        // add logic for syllable extraction here
+                        // also, add syllables too? could use in the future
                     }
                   
                     let compText = words[x].text;
@@ -59,11 +61,12 @@ async function analyzing(inputFile) {
     }
 }
 
+// add conditions parameter
 async function reconstructSubstitution(wordFile, sentenceFile) {
 
     const wordFilePath = `./data/analyzed/words/${wordFile}`
     const sentenceFilePath = `./data/analyzed/sentences/${sentenceFile}`
-    // number of sentences -> between 1 and number of sentences in the file
+    // read conditions -> pull from an object
 
     try {
         const initwordPool = helper.shuffleArr(JSON.parse(await fs.readFile(wordFilePath, { encoding: 'utf8' })));
@@ -126,6 +129,8 @@ async function reconstructSubstitution(wordFile, sentenceFile) {
                         }
                     }
 
+                    // condition for check to add a random linebreak
+
                     // if all tags match, push text
                     if (existState==true) {
 
@@ -142,6 +147,7 @@ async function reconstructSubstitution(wordFile, sentenceFile) {
                 }
             }
 
+            // condition for check to repeat line
             if (i === sentenceStructureList.length-1) {
                 lastSentenceCheck = true;
             }
@@ -155,5 +161,7 @@ async function reconstructSubstitution(wordFile, sentenceFile) {
         console.error(error)
     }
 }
+
+// reconstruction blackout method here
 
 module.exports = { analyzing, reconstructSubstitution }
