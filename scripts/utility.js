@@ -209,8 +209,6 @@ async function reconstructBlackout(textFile, percent) {
             }
         }
 
-        
-
         // split whole doc into list of words
             // loop over list of words
                 // do something with punctuation?
@@ -223,5 +221,28 @@ async function reconstructBlackout(textFile, percent) {
     }
 }
 
+// markov chain function
+    // params - file to read, search chars, number of lines
 
-module.exports = { analyzing, reconstructSubstitution, reconstructBlackout }
+async function markovReconstruct(textFile, charNum, loopNum) {
+
+    const originalText = `./data/rawText/${textFile}`
+
+    try {
+        
+        const wordList = await fs.readFile(originalText, { encoding: 'utf8' });
+        
+        let constructedSentence = ""
+
+        for (let i = 0; i < loopNum; i++ ){
+            constructedSentence = helper.markovChain(wordList,charNum)
+        }
+                
+        await fs.writeFile(`./data/processed/${constructedSentence.slice(0,5)+helper.randomNum(0,10000)}-reconstructed.txt`, constructedSentence);
+    } 
+    catch (error){
+        console.error(error)
+    }
+}
+
+module.exports = { analyzing, reconstructSubstitution, reconstructBlackout, markovReconstruct }
