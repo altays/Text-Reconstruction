@@ -1,9 +1,9 @@
 #! /bin/bash
 
 # variable examples
-analyzeText="sample-txt.txt"
-reconstructWords="sample-txt-words.json"
-reconstructSentences="sample-txt-sentences.json"
+analyzeText="AsKar.txt"
+reconstructWords="AsKar-words.json"
+reconstructSentences="AsKar-sentences.json"
 
 # const processRoute = process.argv[2]
 # const reconstructSubRoute = process.argv[3]
