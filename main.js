@@ -33,6 +33,10 @@ if (processRoute=="a"){
             utility.markovReconstruct(inputName,firstArg,secondArg)
             break
         }
+        case "whitespace": {
+            utility.reconstructWhitespace(inputName)
+            break
+        }
         default: {
             console.log("Empty action received.");
         }

@@ -28,6 +28,10 @@ elif [ "$1" = "m" ]
 then
     # echo "route reconstruct" 
     node main.js r markov $analyzeText 70 5
+elif [ "$1" = "w" ]
+then
+    # echo "route reconstruct" 
+    node main.js r whitespace $analyzeText x x
 elif [ "$1" = "i" ]
 then
     # echo "route reconstruct" 

@@ -221,9 +221,6 @@ async function reconstructBlackout(textFile, percent) {
     }
 }
 
-// markov chain function
-    // params - file to read, search chars, number of lines
-
 async function markovReconstruct(textFile, charNum, loopNum) {
 
     const originalText = `./data/rawText/${textFile}`
@@ -245,4 +242,24 @@ async function markovReconstruct(textFile, charNum, loopNum) {
     }
 }
 
-module.exports = { analyzing, reconstructSubstitution, reconstructBlackout, markovReconstruct }
+async function reconstructWhitespace(textFile) {
+    const originalText = `./data/rawText/${textFile}`
+
+    try {
+        
+        const wordList = await fs.readFile(originalText, { encoding: 'utf8' });
+
+        let wordArr = wordList.split(" ")
+
+        let shuffArr = helper.shuffleArr(wordArr)
+
+        let constructedSentence = helper.whiteSpaceCreator(shuffArr)
+
+        await fs.writeFile(`./data/processed/${'whitespace'+helper.randomNum(0,10000)+helper.randomNum(0,10000)}-reconstructed.txt`, constructedSentence);
+    } 
+    catch (error){
+        console.error(error)
+    }
+}
+
+module.exports = { analyzing, reconstructSubstitution, reconstructBlackout, markovReconstruct, reconstructWhitespace }
