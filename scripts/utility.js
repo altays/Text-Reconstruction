@@ -52,7 +52,6 @@ async function analyzing(inputFile) {
                     wordObj.pronounciation = soundsLike;
                     // console.log(compSyllables)
                     
-                    // console.log()
 
                     // check if word already exists
                     if (textList.includes(compText) == false) {
@@ -61,6 +60,7 @@ async function analyzing(inputFile) {
                     } 
 
                     subPOSArray.push(words[x].tags)
+                    // console.log(subPOSArray)
 
                 }
             }
@@ -190,31 +190,39 @@ async function reconstructBlackout(textFile, percent) {
 
 
         // console.log(nlp(wordList).document[0])
-        let nlpDoc =nlp(wordList)
-
+        let nlpDoc=nlp(wordList)
+        let shuffArr = helper.shuffleArr(nlpDoc)
         let constructedSentence = ""
+        let constructedArray =[]
 
-        for (let i = 0; i < nlpDoc.document.length; i++ ) {
+        for (let i = 0; i < shuffArr.document.length; i++ ) {
             // console.log(nlp(wordList).document[i])
-            let nlpSentence = nlpDoc.document[i]
+            let nlpSentence = shuffArr.document[i]
             // console.log(nlpSentence)
             for (let j = 0; j < nlpSentence.length; j++) {
                 let nlpText=nlpSentence[j].text
                 let coinFlip = helper.randomNum(0,100)
                 if (coinFlip > percent) {
-                    constructedSentence += `${nlpText} `
+                    // constructedSentence += `${nlpText} `
+                    constructedArray.push(nlpText)
                 } else {
-                    constructedSentence += `_____ `
+                    // constructedSentence += `_____ `
+                    // constructedSentence+= " "
+
+
+                    // create a config option for adding spaces or not
+                    // constructedArray.push(" ")
                 }
             }
         }
 
+        constructedSentence = constructedArray.join(" ")
         // split whole doc into list of words
             // loop over list of words
                 // do something with punctuation?
                 // based on chance, add word to constructedSentence variable
         
-        await fs.writeFile(`./data/processed/${constructedSentence.slice(0,5)+helper.randomNum(0,10000)}-reconstructed.txt`, constructedSentence);
+        await fs.writeFile(`./data/processed/${constructedSentence.slice(0,5)+helper.randomNum(0,10000)}-reconstructed.txt`, constructedSentence.trim());
     } 
     catch (error){
         console.error(error)
@@ -251,9 +259,12 @@ async function reconstructWhitespace(textFile) {
 
         let wordArr = wordList.split(" ")
 
-        let shuffArr = helper.shuffleArr(wordArr)
+        // config option to shuffle or don't shuffle
 
-        let constructedSentence = helper.whiteSpaceCreator(shuffArr)
+        // let shuffArr = helper.shuffleArr(wordArr)
+        let shuffleArr=wordArr
+
+        let constructedSentence = helper.whiteSpaceCreator(shuffleArr)
 
         await fs.writeFile(`./data/processed/${'whitespace'+helper.randomNum(0,10000)+helper.randomNum(0,10000)}-reconstructed.txt`, constructedSentence);
     } 
