@@ -5,6 +5,7 @@ nlp.plugin(require('compromise-speech'))
 nlp.plugin(require('compromise-paragraphs')) 
 // import plg from 'compromise-paragraphs'
 
+// add in config options
 async function analyzing(inputFile) {
 
     const inputFilePath = `./data/rawText/${inputFile}`
@@ -52,7 +53,6 @@ async function analyzing(inputFile) {
                     wordObj.pronounciation = soundsLike;
                     // console.log(compSyllables)
                     
-
                     // check if word already exists
                     if (textList.includes(compText) == false) {
                         textList.push(compText);
@@ -81,6 +81,7 @@ async function analyzing(inputFile) {
 
 // add conditions parameter
 async function reconstructSubstitution(wordFile, sentenceFile) {
+    // needs a list of words and list of sentences -> works with analyze function
 
     const wordFilePath = `./data/analyzed/words/${wordFile}`
     const sentenceFilePath = `./data/analyzed/sentences/${sentenceFile}`
@@ -99,7 +100,7 @@ async function reconstructSubstitution(wordFile, sentenceFile) {
         // pull random sentence structures
         for (let i = 0; i < randomSentenceAmount; i++) {
             let randomIndex = helper.randomNum(0, sentencePool.length)
-            let randomSentence = sentencePool[randomIndex]
+            let randomSentence = sentencePool[randomIndex] //would need to access sentence param, could also pull syllable arr
             sentenceStructureList.push(randomSentence)
         }
 
@@ -181,13 +182,13 @@ async function reconstructSubstitution(wordFile, sentenceFile) {
 }
 
 async function reconstructBlackout(textFile, percent) {
+    // only relies on an input file, not analyzed file
 
     const originalText = `./data/rawText/${textFile}`
 
     try {
         
         const wordList = await fs.readFile(originalText, { encoding: 'utf8' });
-
 
         // console.log(nlp(wordList).document[0])
         let nlpDoc=nlp(wordList)
@@ -230,6 +231,7 @@ async function reconstructBlackout(textFile, percent) {
 }
 
 async function markovReconstruct(textFile, charNum, loopNum) {
+    // only relies on an input file, not analyzed file
 
     const originalText = `./data/rawText/${textFile}`
 
@@ -251,6 +253,7 @@ async function markovReconstruct(textFile, charNum, loopNum) {
 }
 
 async function reconstructWhitespace(textFile) {
+    // only relies on an input file, not analyzed file
     const originalText = `./data/rawText/${textFile}`
 
     try {
