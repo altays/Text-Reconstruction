@@ -18,16 +18,12 @@ if (processRoute=="a"){
     // analyzing
     console.log('analyzing')
     // utility.analyzing(inputName)
-    utility.analyzingNew(inputName)
+    utility.analyzing(inputName)
 } else if (processRoute=="r") {
     console.log('reconstructing')
     switch (reconstructSubRoute) {
         case "sub": {
             utility.reconstructSubstitution(inputName, firstArg)
-            break;
-        }
-        case "subNew": {
-            utility.reconstructSubstitutionNew(inputName, firstArg)
             break;
         }
         case "blackout": {
