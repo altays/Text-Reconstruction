@@ -92,19 +92,25 @@ async function analyzingNew(inputFile) {
         let sentences = nlpData.sentences().json();
 
         let wordList = [];
-        let posArray = [];
+        let posObjArray = []
         let textList = [];
-              
+
         for (let i = 0; i < sentences.length; i++) {
 
             let words = sentences[i].terms
+            let posObj = {
+                sentenceArr: [],
+                syllableArr: []
+            }
             let subPOSArray = []
+            let subSyllableArray = []     
 
             for (let x = 0; x < words.length; x++){
                 
                 // 1
                 // for each word -> pull out text and tags
                 wordObj = {}
+                
                 if (words[x].text != "") {
 
                     let wordObj = {
@@ -119,12 +125,10 @@ async function analyzingNew(inputFile) {
                     let compSyllables=nlp(compText).terms().syllables()[0].length
                     let soundsLike = nlp(compText).terms().soundsLike()[0][0]
 
-                    // console.log(compText, compTags, compSyllables, soundsLike[0][0])
                     wordObj.text = compText;
                     wordObj.tags.push(compTags);
                     wordObj.syllables = compSyllables
                     wordObj.pronounciation = soundsLike;
-                    // console.log(compSyllables)
                     
                     // check if word already exists
                     if (textList.includes(compText) == false) {
@@ -133,18 +137,24 @@ async function analyzingNew(inputFile) {
                     } 
 
                     subPOSArray.push(words[x].tags)
-                    // console.log(subPOSArray)
+                    subSyllableArray.push(compSyllables)
 
                 }
+
             }
 
             // 2
             // push sentence arrays to larger text block arrays
-            posArray.push(subPOSArray)
+            // posArray.push(subPOSArray)
+
+            posObj.sentenceArr = subPOSArray;
+            posObj.syllableArr = subSyllableArray
+            posObjArray.push(posObj)
+            console.log(posObj)
         }
             
         await fs.writeFile(wordJSON, JSON.stringify(wordList));
-        await fs.writeFile(sentenceJSON, JSON.stringify(posArray));
+        await fs.writeFile(sentenceJSON, JSON.stringify(posObjArray));
 
     } 
     catch (error){

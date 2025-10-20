@@ -20,6 +20,11 @@ then
     # echo "route reconstruct" $
     # node main.js r sub $reconstructWords $reconstructSentences 
     node main.js r sub $reconstructWords $reconstructSentences
+elif [ "$1" = "subnew" ]
+then
+    # echo "route reconstruct" $
+    # node main.js r sub $reconstructWords $reconstructSentences 
+    node main.js r subNew $reconstructWords $reconstructSentences
 elif [ "$1" = "b" ]
 then
     # echo "route reconstruct" 
