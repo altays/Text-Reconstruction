@@ -31,7 +31,7 @@ then
 elif [ "$1" = "w" ]
 then
     # echo "route reconstruct" 
-    node main.js r whitespace $analyzeText x x
+    node main.js r whitespace $analyzeText false x
 elif [ "$1" = "i" ]
 then
     # echo "route reconstruct" 

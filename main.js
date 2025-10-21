@@ -35,7 +35,7 @@ if (processRoute=="a"){
             break
         }
         case "whitespace": {
-            utility.reconstructWhitespace(inputName)
+            utility.reconstructWhitespace(inputName,firstArg)
             break
         }
         default: {
