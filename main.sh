@@ -6,7 +6,7 @@ reconstructWords="sample-txt-words.json"
 reconstructSentences="sample-txt-sentences.json"
 
 randomChar=$[ ( $RANDOM % 50 )  + 1 ]
-randomLoop=$[ ( $RANDOM % 2 )  + 2 ]
+randomLoop=$[ ( $RANDOM % 9 )  + 2 ]
 
 if [ "$1" = "a" ] 
 then

@@ -245,7 +245,7 @@ async function markovReconstruct(textFile, charNum, loopNum) {
             constructedSentence += helper.markovChain(wordList,charNum)
         }
                 
-        await fs.writeFile(`./data/processed/markov${helper.randomNum(0,100000)}-${helper.randomNum(0,100000)}-reconstructed.txt`, constructedSentence);
+        await fs.writeFile(`./data/processed/${helper.randomNum(0,100000)}-${helper.randomNum(0,100000)}-markov.txt`, constructedSentence);
     } 
     catch (error){
         console.error(error)
@@ -275,7 +275,7 @@ async function reconstructWhitespace(textFile, shuffle) {
  
         let constructedSentence = helper.whiteSpaceCreator(shuffleArr)
 
-        await fs.writeFile(`./data/processed/${'whitespace'+helper.randomNum(0,10000)+helper.randomNum(0,10000)}-whitespace.txt`, constructedSentence);
+        await fs.writeFile(`./data/processed/${helper.randomNum(0,10000)+helper.randomNum(0,10000)}-whitespace.txt`, constructedSentence);
     } 
     catch (error){
         console.error(error)

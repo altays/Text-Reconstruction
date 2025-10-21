@@ -65,7 +65,7 @@ function nGramsChars(sentence, n) {
     return grams;
 }
 
-function markovChain (string, newChar, loops) {
+function markovChain (string, newChar) {
 
     let ngrams = {};
 
