@@ -254,6 +254,7 @@ async function markovReconstruct(textFile, charNum, loopNum) {
 
 async function reconstructWhitespace(textFile, shuffle) {
     // only relies on an input file, not analyzed file
+    // first arg enables or disables shuffle
     const originalText = `./data/rawText/${textFile}`
 
     try {
@@ -262,22 +263,16 @@ async function reconstructWhitespace(textFile, shuffle) {
 
         let wordArr = wordList.split(" ")
 
-        // config option to shuffle or don't shuffle
-
         console.log(shuffle)
 
         let shuffleArr;
 
         if (shuffle=="true"){
             shuffleArr = helper.shuffleArr(wordArr)
-            console.log('shuffled')
         } else {
             shuffleArr=wordArr
-            console.log('not shuffled')
         }
-        // let shuffArr = helper.shuffleArr(wordArr)
-
-
+ 
         let constructedSentence = helper.whiteSpaceCreator(shuffleArr)
 
         await fs.writeFile(`./data/processed/${'whitespace'+helper.randomNum(0,10000)+helper.randomNum(0,10000)}-whitespace.txt`, constructedSentence);
