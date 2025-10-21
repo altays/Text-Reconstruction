@@ -27,7 +27,7 @@ then
 elif [ "$1" = "m" ]
 then
     # echo "route reconstruct" 
-    node main.js r markov $analyzeText 50 5
+    node main.js r markov $analyzeText 20 2
 elif [ "$1" = "w" ]
 then
     # echo "route reconstruct" 

@@ -242,10 +242,10 @@ async function markovReconstruct(textFile, charNum, loopNum) {
         let constructedSentence = ""
 
         for (let i = 0; i < loopNum; i++ ){
-            constructedSentence = helper.markovChain(wordList,charNum)
+            constructedSentence += helper.markovChain(wordList,charNum)
         }
                 
-        await fs.writeFile(`./data/processed/${constructedSentence.slice(0,5)+helper.randomNum(0,10000)}-reconstructed.txt`, constructedSentence);
+        await fs.writeFile(`./data/processed/markov${helper.randomNum(0,100000)}-${helper.randomNum(0,100000)}-reconstructed.txt`, constructedSentence);
     } 
     catch (error){
         console.error(error)
