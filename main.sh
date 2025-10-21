@@ -5,11 +5,8 @@ analyzeText="sample-txt.txt"
 reconstructWords="sample-txt-words.json"
 reconstructSentences="sample-txt-sentences.json"
 
-# const processRoute = process.argv[2]
-# const reconstructSubRoute = process.argv[3]
-# const inputName = process.argv[4]
-# const firstArg = process.argv[5]
-# const secondArg = process.argv[6]
+randomChar=$[ ( $RANDOM % 50 )  + 1 ]
+randomLoop=$[ ( $RANDOM % 2 )  + 2 ]
 
 if [ "$1" = "a" ] 
 then
@@ -23,11 +20,11 @@ then
 elif [ "$1" = "b" ]
 then
     # echo "route reconstruct" 
-    node main.js r blackout $analyzeText 50 _
+    node main.js r blackout $analyzeText  _
 elif [ "$1" = "m" ]
 then
     # echo "route reconstruct" 
-    node main.js r markov $analyzeText 20 2
+    node main.js r markov $analyzeText $randomChar $randomLoop
 elif [ "$1" = "w" ]
 then
     # echo "route reconstruct" 
