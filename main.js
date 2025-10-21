@@ -27,7 +27,7 @@ if (processRoute=="a"){
             break;
         }
         case "blackout": {
-            utility.reconstructBlackout(inputName,firstArg)
+            utility.reconstructBlackout(inputName,firstArg,secondArg)
             break
         }
         case "markov": {

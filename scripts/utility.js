@@ -190,8 +190,10 @@ async function reconstructSubstitution(wordFile, sentenceFile) {
     }
 }
 
-async function reconstructBlackout(textFile, percent) {
+async function reconstructBlackout(textFile, percent, config) {
     // only relies on an input file, not analyzed file
+
+    let configDelimit = helper.configPrepChar(config)
 
     const originalText = `./data/rawText/${textFile}`
 
@@ -199,40 +201,29 @@ async function reconstructBlackout(textFile, percent) {
         
         const wordList = await fs.readFile(originalText, { encoding: 'utf8' });
 
-        // console.log(nlp(wordList).document[0])
         let nlpDoc=nlp(wordList)
         let shuffArr = helper.shuffleArr(nlpDoc)
         let constructedSentence = ""
         let constructedArray =[]
 
         for (let i = 0; i < shuffArr.document.length; i++ ) {
-            // console.log(nlp(wordList).document[i])
+            
             let nlpSentence = shuffArr.document[i]
-            // console.log(nlpSentence)
+
             for (let j = 0; j < nlpSentence.length; j++) {
                 let nlpText=nlpSentence[j].text
                 let coinFlip = helper.randomNum(0,100)
                 if (coinFlip > percent) {
-                    // constructedSentence += `${nlpText} `
                     constructedArray.push(nlpText)
                 } else {
-                    // constructedSentence += `_____ `
-                    // constructedSentence+= " "
-
-
-                    // create a config option for adding spaces or not
-                    // constructedArray.push(" ")
+                    constructedArray.push(configDelimit)
                 }
             }
         }
 
         constructedSentence = constructedArray.join(" ")
-        // split whole doc into list of words
-            // loop over list of words
-                // do something with punctuation?
-                // based on chance, add word to constructedSentence variable
         
-        await fs.writeFile(`./data/processed/${constructedSentence.slice(0,5)+helper.randomNum(0,10000)}-reconstructed.txt`, constructedSentence.trim());
+        await fs.writeFile(`./data/processed/${constructedSentence.slice(0,5)+helper.randomNum(0,10000)}-blackout.txt`, constructedSentence.trim());
     } 
     catch (error){
         console.error(error)

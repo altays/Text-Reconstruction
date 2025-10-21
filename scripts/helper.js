@@ -166,7 +166,7 @@ function whiteSpaceCreator(inputTextArr) {
 }
 
 // repeat line
-function repeat (text, num) {
+function repeat(text, num) {
 
     let outputStr = ""
 
@@ -175,9 +175,19 @@ function repeat (text, num) {
     }
 
     return outputStr
+}
 
+function configPrepChar(config){
+    if (config === undefined) {
+        return ""
+    } else if (!isNaN(config)) {
+        return repeat(" ",config)
+    } 
+    else {
+        return config
+    }
 }
 
 // reading conditions -> return an object and pull values from object
 
-module.exports = { repeat, randomNum, normalCase, createPunctuation, shuffleArr, markovChain, whiteSpaceCreator }
+module.exports = { repeat, randomNum, normalCase, createPunctuation, shuffleArr, markovChain, whiteSpaceCreator, configPrepChar }

@@ -20,19 +20,14 @@ then
     # echo "route reconstruct" $
     # node main.js r sub $reconstructWords $reconstructSentences 
     node main.js r sub $reconstructWords $reconstructSentences
-elif [ "$1" = "subnew" ]
-then
-    # echo "route reconstruct" $
-    # node main.js r sub $reconstructWords $reconstructSentences 
-    node main.js r subNew $reconstructWords $reconstructSentences
 elif [ "$1" = "b" ]
 then
     # echo "route reconstruct" 
-    node main.js r blackout $analyzeText 70 
+    node main.js r blackout $analyzeText 50 _
 elif [ "$1" = "m" ]
 then
     # echo "route reconstruct" 
-    node main.js r markov $analyzeText 70 5
+    node main.js r markov $analyzeText 50 5
 elif [ "$1" = "w" ]
 then
     # echo "route reconstruct" 
