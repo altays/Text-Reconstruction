@@ -1,9 +1,9 @@
 #! /bin/bash
 
 # variable examples
-analyzeText="sample-txt.txt"
-reconstructWords="sample-txt-words.json"
-reconstructSentences="sample-txt-sentences.json"
+analyzeText="AsKar.txt"
+reconstructWords="AsKar-words.json"
+reconstructSentences="AsKar-sentences.json"
 
 randomChar=$[ ( $RANDOM % 50 )  + 1 ]
 randomLoop=$[ ( $RANDOM % 9 )  + 2 ]
@@ -20,7 +20,7 @@ then
 elif [ "$1" = "b" ]
 then
     # echo "route reconstruct" 
-    node main.js r blackout $analyzeText  _
+    node main.js r blackout $analyzeText  10 _
 elif [ "$1" = "m" ]
 then
     # echo "route reconstruct" 

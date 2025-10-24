@@ -1,5 +1,3 @@
-const fs = require('node:fs/promises');
-
 function randomNum(max, min) {
     return Math.floor(Math.random() * (max-min) + min)
 }
@@ -65,6 +63,79 @@ function nGramsChars(sentence, n) {
     return grams;
 }
 
+// array of spaces
+function spaceArrSwitch(route) {
+    switch (route) {
+        case 0:
+            return repeat('\n',randomNum(0,2))
+        case 1:
+            return repeat(' ',randomNum(0,10))
+
+        // ... more cases
+        default:
+            return ' '
+    }
+}
+
+function spaceArrayCreator(size) {
+    let initSpaceArray = []
+
+    for (let i = 0; i < size; i++) {
+        let choice = randomNum(0,2)
+        initSpaceArray.push(spaceArrSwitch(choice))
+    }
+    return initSpaceArray
+}
+
+function repeat(text, num) {
+
+    let outputStr = ""
+
+    for (let i = 0; i < num; i++) {
+        outputStr += text
+    }
+
+    return outputStr
+}
+
+function configPrepChar(config){
+    if (config === undefined) {
+        return ""
+    } else if (!isNaN(config)) {
+        return repeat(" ",config)
+    } 
+    else {
+        return config
+    }
+}
+
+// move this over into word-processing
+function whiteSpaceCreator(inputTextArr) {
+    let spaceArray = spaceArrayCreator(10)
+
+    let spaceArrayPoint = 0;
+
+    let textArr=inputTextArr;
+
+    for (u = 0; u < textArr.length; u++){
+
+        if (Math.random()>0.5){
+            let spaceArrayChoice = spaceArray[spaceArrayPoint]
+            if (spaceArrayPoint < spaceArray.length-1){
+                spaceArrayPoint = spaceArrayPoint + 1;
+            }
+
+        else {
+            spaceArrayPoint = 0;
+            }
+        textArr[u] = spaceArrayChoice;
+        }
+    }
+
+    return textArr.join(" ").trim()
+}
+
+// move this over into word-processing
 function markovChain (string, newChar) {
 
     let ngrams = {};
@@ -114,78 +185,6 @@ function markovChain (string, newChar) {
 
     return output
 
-}
-
-// array of spaces
-function spaceArrSwitch(route) {
-    switch (route) {
-        case 0:
-            return repeat('\n',randomNum(0,2))
-        case 1:
-            return repeat(' ',randomNum(0,10))
-
-        // ... more cases
-        default:
-            return ' '
-    }
-}
-
-function spaceArrayCreator(size) {
-    let initSpaceArray = []
-
-    for (let i = 0; i < size; i++) {
-        let choice = randomNum(0,2)
-        initSpaceArray.push(spaceArrSwitch(choice))
-    }
-    return initSpaceArray
-}
-
-function whiteSpaceCreator(inputTextArr) {
-    let spaceArray = spaceArrayCreator(10)
-
-    let spaceArrayPoint = 0;
-
-    let textArr=inputTextArr;
-
-    for (u = 0; u < textArr.length; u++){
-
-        if (Math.random()>0.5){
-            let spaceArrayChoice = spaceArray[spaceArrayPoint]
-            if (spaceArrayPoint < spaceArray.length-1){
-                spaceArrayPoint = spaceArrayPoint + 1;
-            }
-
-        else {
-            spaceArrayPoint = 0;
-            }
-        textArr[u] = spaceArrayChoice;
-        }
-    }
-
-    return textArr.join(" ").trim()
-}
-
-// repeat line
-function repeat(text, num) {
-
-    let outputStr = ""
-
-    for (let i = 0; i < num; i++) {
-        outputStr += text
-    }
-
-    return outputStr
-}
-
-function configPrepChar(config){
-    if (config === undefined) {
-        return ""
-    } else if (!isNaN(config)) {
-        return repeat(" ",config)
-    } 
-    else {
-        return config
-    }
 }
 
 // reading conditions -> return an object and pull values from object
