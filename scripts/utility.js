@@ -101,7 +101,7 @@ async function markovReconstruct(textFile, charNum, loopNum) {
         let constructedSentence = ""
 
         for (let i = 0; i < loopNum; i++ ){
-            constructedSentence += helper.markovChain(wordList,charNum)
+            constructedSentence += wordProcessing.markovChain(wordList,charNum)
         }
                 
         await fs.writeFile(`./data/processed/${helper.randomNum(0,100000)}-${helper.randomNum(0,100000)}-markov.txt`, constructedSentence);
@@ -140,5 +140,7 @@ async function reconstructWhitespace(textFile, shuffle) {
         console.error(error)
     }
 }
+
+
 
 module.exports = { analyzing, reconstructSubstitution, reconstructBlackout, markovReconstruct, reconstructWhitespace }
