@@ -132,7 +132,7 @@ async function reconstructWhitespace(textFile, shuffle) {
             shuffleArr=wordArr
         }
  
-        let constructedSentence = helper.whiteSpaceCreator(shuffleArr)
+        let constructedSentence = wordProcessing.whiteSpaceCreator(shuffleArr)
 
         await fs.writeFile(`./data/processed/${helper.randomNum(0,10000)+helper.randomNum(0,10000)}-whitespace.txt`, constructedSentence);
     } 

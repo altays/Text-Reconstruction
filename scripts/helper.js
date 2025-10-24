@@ -109,31 +109,7 @@ function configPrepChar(config){
     }
 }
 
-// move this over into word-processing
-function whiteSpaceCreator(inputTextArr) {
-    let spaceArray = spaceArrayCreator(10)
 
-    let spaceArrayPoint = 0;
-
-    let textArr=inputTextArr;
-
-    for (u = 0; u < textArr.length; u++){
-
-        if (Math.random()>0.5){
-            let spaceArrayChoice = spaceArray[spaceArrayPoint]
-            if (spaceArrayPoint < spaceArray.length-1){
-                spaceArrayPoint = spaceArrayPoint + 1;
-            }
-
-        else {
-            spaceArrayPoint = 0;
-            }
-        textArr[u] = spaceArrayChoice;
-        }
-    }
-
-    return textArr.join(" ").trim()
-}
 
 // move this over into word-processing
 function markovChain (string, newChar) {
@@ -189,4 +165,4 @@ function markovChain (string, newChar) {
 
 // reading conditions -> return an object and pull values from object
 
-module.exports = { repeat, randomNum, normalCase, createPunctuation, shuffleArr, markovChain, whiteSpaceCreator, configPrepChar }
+module.exports = { repeat, randomNum, normalCase, createPunctuation, shuffleArr, markovChain, configPrepChar, spaceArrayCreator }

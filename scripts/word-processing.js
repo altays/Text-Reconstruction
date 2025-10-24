@@ -160,8 +160,30 @@ function textAnalyzer(sentences) {
 
 }
 
-// whitespace
+function whiteSpaceCreator(inputTextArr) {
+    let spaceArray = helper.spaceArrayCreator(10)
 
+    let spaceArrayPoint = 0;
+
+    let textArr=inputTextArr;
+
+    for (u = 0; u < textArr.length; u++){
+
+        if (Math.random()>0.5){
+            let spaceArrayChoice = spaceArray[spaceArrayPoint]
+            if (spaceArrayPoint < spaceArray.length-1){
+                spaceArrayPoint = spaceArrayPoint + 1;
+            }
+
+        else {
+            spaceArrayPoint = 0;
+            }
+        textArr[u] = spaceArrayChoice;
+        }
+    }
+
+    return textArr.join(" ").trim()
+}
 
 
 // markov
@@ -171,4 +193,4 @@ function textAnalyzer(sentences) {
 
 // blackout
 
-module.exports = {substitutionCreator, textAnalyzer }
+module.exports = {substitutionCreator, textAnalyzer, whiteSpaceCreator }
