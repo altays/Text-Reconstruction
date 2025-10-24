@@ -62,27 +62,9 @@ async function reconstructBlackout(textFile, percent, config) {
 
         let nlpDoc=nlp(wordList)
         let shuffArr = helper.shuffleArr(nlpDoc)
-        let constructedSentence = ""
-        let constructedArray =[]
-
-        for (let i = 0; i < shuffArr.document.length; i++ ) {
-            
-            let nlpSentence = shuffArr.document[i]
-
-            for (let j = 0; j < nlpSentence.length; j++) {
-                let nlpText=nlpSentence[j].text
-                let coinFlip = helper.randomNum(0,100)
-                if (coinFlip > percent) {
-                    constructedArray.push(nlpText)
-                } else {
-                    constructedArray.push(configDelimit)
-                }
-            }
-        }
-
-        constructedSentence = constructedArray.join(" ")
+        let blackoutText = wordProcessing.blackoutCreator(shuffArr, percent, configDelimit)
         
-        await fs.writeFile(`./data/processed/${constructedSentence.slice(0,5)+helper.randomNum(0,10000)}-blackout.txt`, constructedSentence.trim());
+        await fs.writeFile(`./data/processed/${blackoutText.slice(0,5)+helper.randomNum(0,10000)}-blackout.txt`, blackoutText.trim());
     } 
     catch (error){
         console.error(error)

@@ -93,8 +93,6 @@ function substitutionCreator (words, sentences) {
 
     return constructedSentence
 
-    // end function here, return constructed sentence
-
 }        
 
 function textAnalyzer(sentences) {
@@ -185,9 +183,6 @@ function whiteSpaceCreator(inputTextArr) {
     return textArr.join(" ").trim()
 }
 
-
-// markov
-
 function markovChain (string, newChar) {
 
     let ngrams = {};
@@ -236,10 +231,34 @@ function markovChain (string, newChar) {
     }
 
     return output
-
 }
 
 
 // blackout
 
-module.exports = {substitutionCreator, textAnalyzer, whiteSpaceCreator, markovChain }
+function blackoutCreator(wordArr, percent, delimit) {
+    let constructedSentence = ""
+    let constructedArray =[]
+
+    for (let i = 0; i < wordArr.document.length; i++ ) {
+        
+        let nlpSentence = wordArr.document[i]
+
+        for (let j = 0; j < nlpSentence.length; j++) {
+            let nlpText=nlpSentence[j].text
+            let coinFlip = helper.randomNum(0,100)
+            if (coinFlip > percent) {
+                constructedArray.push(nlpText)
+            } else {
+                constructedArray.push(delimit)
+            }
+        }
+    }
+
+    constructedSentence = constructedArray.join(" ")
+
+    return constructedSentence
+
+}
+
+module.exports = {substitutionCreator, textAnalyzer, whiteSpaceCreator, markovChain, blackoutCreator }

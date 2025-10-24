@@ -109,9 +109,6 @@ function configPrepChar(config){
     }
 }
 
-// move this over into word-processing
-
-
 // reading conditions -> return an object and pull values from object
 
 module.exports = { repeat, randomNum, normalCase, createPunctuation, shuffleArr, configPrepChar, spaceArrayCreator, choice, nGramsChars }
