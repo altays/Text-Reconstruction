@@ -20,7 +20,7 @@ then
 elif [ "$1" = "b" ]
 then
     # echo "route reconstruct" 
-    node main.js r blackout $analyzeText  50 _
+    node main.js r blackout $analyzeText  50 ■
 elif [ "$1" = "m" ]
 then
     # echo "route reconstruct" 

@@ -1,6 +1,74 @@
 const helper = require('./helper');
 const nlp = require('compromise');
 
+function textAnalyzer(sentences) {
+    // start of function
+    let wordList = [];
+    let posObjArray = []
+    let textList = [];
+
+    for (let i = 0; i < sentences.length; i++) {
+
+        let words = sentences[i].terms
+        let posObj = {
+            sentenceArr: [],
+            syllableArr: []
+        }
+        let subPOSArray = []
+        let subSyllableArray = []     
+
+        for (let x = 0; x < words.length; x++){
+            
+            // 1
+            // for each word -> pull out text and tags
+            wordObj = {}
+            
+            if (words[x].text != "") {
+
+                let wordObj = {
+                    text: "",
+                    tags: undefined,
+                    syllables:undefined,
+                    syllablesCount: 0,
+                    pronounciation: ""
+                }
+            
+                let compText = words[x].text;
+                let compTags = words[x].tags;
+                let compSyllables=nlp(compText).terms().syllables()[0]
+                let compSyllablesLen=compSyllables.length
+
+                let soundsLike = nlp(compText).terms().soundsLike()[0][0]
+
+                wordObj.text = compText;
+                wordObj.tags = compTags;
+                wordObj.syllablesCount = compSyllablesLen
+                wordObj.syllables = compSyllables
+                wordObj.pronounciation = soundsLike;
+                
+                // check if word already exists
+                if (textList.includes(compText) == false) {
+                    textList.push(compText);
+                    wordList.push(wordObj);
+                    // console.log(wordObj)
+                } 
+
+                subPOSArray.push(words[x].tags)
+                subSyllableArray.push(compSyllablesLen)
+            }
+        }
+
+        // 2
+        // push sentence arrays to larger text block arrays
+
+        posObj.sentenceArr = subPOSArray;
+        posObj.syllableArr = subSyllableArray
+        posObjArray.push(posObj)
+    }
+    return {words:wordList, pos:posObjArray}
+
+}
+
 function substitutionCreator (words, sentences) {
 
     let sentenceStructureList = []
@@ -39,7 +107,7 @@ function substitutionCreator (words, sentences) {
                 wordPool = helper.shuffleArr(words)
             
                 let wordPoolText = wordPool[k].text
-                let wordPoolTags = wordPool[k].tags[0]
+                let wordPoolTags = wordPool[k].tags
                 let wordPoolSyllables = wordPool[k].syllables
                 let wordPoolProuncunciation = wordPool[k].pronounciation
                 // should set up separate states for tags, syllables, pronounciation
@@ -78,12 +146,12 @@ function substitutionCreator (words, sentences) {
                     // if word is a proper noun, don't make it lowercase
                     if (wordPoolTags.includes('ProperNoun' || 'Pronoun') === true) {
                         constructedSentence+=`${wordPoolText} `
-                        console.log(wordPoolText)
+                        // console.log(wordPoolText)
                         break
                     }
                     else {
                         constructedSentence+=`${wordPoolText} `.toLowerCase()
-                        console.log(wordPoolText)
+                        // console.log(wordPoolText)
                         break
                     }
                 }
@@ -102,74 +170,7 @@ function substitutionCreator (words, sentences) {
 
 }        
 
-function textAnalyzer(sentences) {
-    // start of function
-    let wordList = [];
-    let posObjArray = []
-    let textList = [];
 
-    for (let i = 0; i < sentences.length; i++) {
-
-        let words = sentences[i].terms
-        let posObj = {
-            sentenceArr: [],
-            syllableArr: []
-        }
-        let subPOSArray = []
-        let subSyllableArray = []     
-
-        for (let x = 0; x < words.length; x++){
-            
-            // 1
-            // for each word -> pull out text and tags
-            wordObj = {}
-            
-            if (words[x].text != "") {
-
-                let wordObj = {
-                    text: "",
-                    tags: [],
-                    syllables:undefined,
-                    syllablesCount: 0,
-                    pronounciation: ""
-                }
-            
-                let compText = words[x].text;
-                let compTags = words[x].tags;
-                let compSyllables=nlp(compText).terms().syllables()[0]
-                let compSyllablesLen=compSyllables.length
-
-                let soundsLike = nlp(compText).terms().soundsLike()[0][0]
-
-
-                wordObj.text = compText;
-                wordObj.tags.push(compTags);
-                wordObj.syllablesCount = compSyllablesLen
-                wordObj.syllables = compSyllables
-                wordObj.pronounciation = soundsLike;
-                
-                // check if word already exists
-                if (textList.includes(compText) == false) {
-                    textList.push(compText);
-                    wordList.push(wordObj);
-                    console.log(wordObj)
-                } 
-
-                subPOSArray.push(words[x].tags)
-                subSyllableArray.push(compSyllablesLen)
-            }
-        }
-
-        // 2
-        // push sentence arrays to larger text block arrays
-
-        posObj.sentenceArr = subPOSArray;
-        posObj.syllableArr = subSyllableArray
-        posObjArray.push(posObj)
-    }
-    return {words:wordList, pos:posObjArray}
-
-}
 
 function whiteSpaceCreator(inputTextArr) {
     let spaceArray = helper.spaceArrayCreator(10)
