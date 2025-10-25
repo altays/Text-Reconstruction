@@ -45,6 +45,8 @@ function substitutionCreator (words, sentences) {
                 // should set up separate states for tags, syllables, pronounciation
                 let existCheckTags = []
                 let existStateTags = true
+                // variable for global exist state
+                // variable for syllable check state, existCheckSyllable
 
                 // console.log(wordPoolText, wordPoolTags, wordPoolSyllables, wordPoolProuncunciation)
 
@@ -52,13 +54,15 @@ function substitutionCreator (words, sentences) {
                 for (let l = 0; l < wordPoolTags.length; l++) {
                     let wordTag = wordPoolTags[l]
                     let arrayIncludes = sentenceWordTags.includes(wordTag)
-
+                    // console.log('array includes', arrayIncludes)
                     if (arrayIncludes) {
                         existCheckTags.push(true);
                     } else {
                         existCheckTags.push(false)
                     }
                 }
+                // console.log(existCheckTags)
+                
 
                 // looping over array of matches, if all true, then overall value is true
                 for (let e = 0; e < existCheckTags.length; e++) {
@@ -68,15 +72,18 @@ function substitutionCreator (words, sentences) {
                 }
 
                 // if all tags match, push text
+                // use a global state check - include tag checking by default
                 if (existStateTags==true) {
 
                     // if word is a proper noun, don't make it lowercase
                     if (wordPoolTags.includes('ProperNoun' || 'Pronoun') === true) {
                         constructedSentence+=`${wordPoolText} `
+                        console.log(wordPoolText)
                         break
                     }
                     else {
                         constructedSentence+=`${wordPoolText} `.toLowerCase()
+                        console.log(wordPoolText)
                         break
                     }
                 }
@@ -122,17 +129,22 @@ function textAnalyzer(sentences) {
                 let wordObj = {
                     text: "",
                     tags: [],
-                    syllables: 0,
+                    syllables:undefined,
+                    syllablesCount: 0,
                     pronounciation: ""
                 }
             
                 let compText = words[x].text;
                 let compTags = words[x].tags;
-                let compSyllables=nlp(compText).terms().syllables()[0].length
+                let compSyllables=nlp(compText).terms().syllables()[0]
+                let compSyllablesLen=compSyllables.length
+
                 let soundsLike = nlp(compText).terms().soundsLike()[0][0]
+
 
                 wordObj.text = compText;
                 wordObj.tags.push(compTags);
+                wordObj.syllablesCount = compSyllablesLen
                 wordObj.syllables = compSyllables
                 wordObj.pronounciation = soundsLike;
                 
@@ -140,10 +152,11 @@ function textAnalyzer(sentences) {
                 if (textList.includes(compText) == false) {
                     textList.push(compText);
                     wordList.push(wordObj);
+                    console.log(wordObj)
                 } 
 
                 subPOSArray.push(words[x].tags)
-                subSyllableArray.push(compSyllables)
+                subSyllableArray.push(compSyllablesLen)
             }
         }
 
