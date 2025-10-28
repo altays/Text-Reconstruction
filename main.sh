@@ -1,6 +1,5 @@
 #! /bin/bash
 
-# variable examples
 analyzeText="sample-txt.txt"
 reconstructWords="sample-txt-words.json"
 reconstructSentences="sample-txt-sentences.json"
@@ -14,24 +13,23 @@ then
     node main.js a x $analyzeText
 elif [ "$1" = "r" ]
 then
-    # echo "route reconstruct" $
-    # node main.js r sub $reconstructWords $reconstructSentences 
+    echo "route substitution" 
     node main.js r sub $reconstructWords $reconstructSentences
 elif [ "$1" = "b" ]
 then
-    # echo "route reconstruct" 
-    node main.js r blackout $analyzeText  50 ■
+    echo "route blackout" 
+    node main.js r blackout $analyzeText 50 ■
 elif [ "$1" = "m" ]
 then
-    # echo "route reconstruct" 
+    echo "route markov" 
     node main.js r markov $analyzeText $randomChar $randomLoop
 elif [ "$1" = "w" ]
 then
-    # echo "route reconstruct" 
+    echo "route whitespace" 
     node main.js r whitespace $analyzeText false x
 elif [ "$1" = "i" ]
 then
-    # echo "route reconstruct" 
+    echo " init" 
     mkdir data data/analyzed data/analyzed/words data/analyzed/sentences data/processed data/rawText
     touch test.js
 else
